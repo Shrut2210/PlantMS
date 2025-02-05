@@ -21,4 +21,11 @@ export const GET = async (req: Request, res: NextResponse) => {
         const products = await Products.find();
         const order_products = await Order_Products.find()
     }
+    catch (error) {
+        console.error(error);
+        return NextResponse.json({
+            status: 500,
+            message: "Internal Server Error"
+        });
+    }
 }
