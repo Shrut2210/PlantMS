@@ -55,7 +55,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-serif`}
       >
         { !hideHeader && <header>
-          <div className='flex justify-between items-center h-16 shadow-md p-2 bg-black'>
+          <div className='flex justify-between items-center h-20 p-2 bg-black'>
             <Image src={logo} alt='Logo' width={120} height={100} />
             <div className="flex">
               {userData ? 

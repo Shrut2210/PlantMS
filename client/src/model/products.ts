@@ -23,13 +23,15 @@ const productModel = new mongoose.Schema(
             type: String,
             required: true,
         },
-        category: {
+        main_category: {
             type: String,
             required: true,
         },
+        sub_category: {
+            type: String,
+        },
         image: [{
             type: String,
-            required: true,
         }],
         createdAt: {
             type: Date,

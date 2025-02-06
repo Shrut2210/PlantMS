@@ -5,9 +5,9 @@ import { NextResponse } from "next/server";
 export const PUT = async (req: Request, res: Response) => {
     try {
         const productId  = req.url.split("server/")[1];
-        const { name, menufecharBy, price, quantity, description, category, image } = await req.json();
+        const { name, menufecharBy, price, quantity, description, main_category, sub_category, image } = await req.json();
         
-        if (!productId || !name || !menufecharBy || !price || !quantity || !description || !category || !image.length) {
+        if (!productId || !name || !menufecharBy || !price || !quantity || !description || !main_category || !image.length) {
             return NextResponse.json({
                 status: 400,
                 message: "Missing required fields",
@@ -25,7 +25,8 @@ export const PUT = async (req: Request, res: Response) => {
                 price,
                 quantity,
                 description,
-                category,
+                main_category,
+                sub_category,
                 image,
                 updatedAt: new Date(),
             },

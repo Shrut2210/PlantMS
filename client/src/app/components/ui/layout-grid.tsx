@@ -82,7 +82,7 @@ const ImageComponent = ({ card }: { card: Card }) => {
           alt="thumbnail"
           layout="fill" 
           objectFit="cover" 
-          className="transition duration-200"
+          className="transition duration-20"
         />
       </motion.div>
     );
