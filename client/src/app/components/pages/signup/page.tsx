@@ -73,7 +73,7 @@ export default function page() {
                 password : ""
             });
 
-            router.push("/components/pages/home")
+            router.push("/")
         } else {
             alert("Invalid credentials!");
         }
