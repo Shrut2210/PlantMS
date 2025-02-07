@@ -7,6 +7,8 @@ export async function GET() {
   await dbConnect();
 
   const token = (await cookies()).get("token")?.value || "";
+  console.log(token);
+  
 
   if (!token) {
     return NextResponse.json({ status: 401, message: "Token not found" });

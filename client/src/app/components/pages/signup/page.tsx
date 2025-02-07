@@ -66,7 +66,7 @@ export default function page() {
         
         if(response.status === 200) {
             const data = await response.json();
-            document.cookie = `token=${data.token}; expires=${new Date(Date.now() + 60 * 60 * 1000 * 24 * 30).toUTCString()}`;
+            // document.cookie = `token=${data.token}; expires=${new Date(Date.now() + 60 * 60 * 1000 * 24 * 30).toUTCString()}`;
             alert("Login successful!");
             setLoginData({
                 email : "",

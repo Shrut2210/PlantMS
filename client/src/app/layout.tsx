@@ -49,6 +49,18 @@ export default function RootLayout({
       .finally(() => setLoading(false));
   }, []);
 
+  const handleLogOut = async () => {
+    const response = await fetch('/api/users/logout')
+
+    if(response.status === 200) {
+      setUserData(null);
+      alert("Logged out successfully!");
+      window.location.replace('/');
+    } else {
+      console.error("Error while logging out!");
+    }
+  }
+
   return (
     <html lang="en">
       <body
@@ -64,18 +76,18 @@ export default function RootLayout({
                       <Link href='/components/pages/home'>
                         <div className='text-white pe-4 hover:text-gray-500 rounded-md'>Home</div>
                       </Link>
-                      <Link href="/api/admin/logout">
+                      <div onClick={handleLogOut}>
                         <div className='me-4 px-3 hover:text-gray-500 text-black bg-green-400 rounded-md'>Logout</div>
-                      </Link>
+                      </div>
                   </div>
                   : 
                   <div className="flex">
                       <Link href='/components/pages/adminHome'>
                       <div className='text-white pe-4 hover:text-gray-500 rounded-md'>Home</div>
                     </Link>
-                      <Link href="/api/admin/logout">
+                      <div onClick={handleLogOut}>
                         <div className='me-4 px-3 hover:text-gray-500 text-black bg-green-400 rounded-md'>Logout</div>
-                      </Link>
+                      </div>
                   </div>
                 ) : 
                 <Link href='/components/pages/signup'>

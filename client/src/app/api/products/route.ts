@@ -20,7 +20,7 @@ export const GET = async (req: Request, res: Response) => {
 
         return NextResponse.json({
             status: 200,
-            body : JSON.stringify(products),
+            body : products,
             message: 'Products found',
             function_name : 'Product_get'
         }) 
