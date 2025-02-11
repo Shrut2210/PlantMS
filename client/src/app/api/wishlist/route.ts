@@ -1,13 +1,16 @@
-import { Wishlist_Products } from "@/model/wishlist_products";
 import dbConnect from "@/lib/mongodb";
 import { NextResponse, NextRequest } from "next/server";
+import { cookies } from "next/headers";
+import { Users } from "@/model/users";
+import { Products } from "@/model/products";
+import { products } from "@/app/page";
 
 export const GET = async (req: Request, res: NextResponse) => {
     await dbConnect()
 
-    const userId = req.headers.get('X-User-Id');
+    const token = (await cookies()).get("token")?.value || "";
 
-    if (!userId) {
+    if (!token) {
         return NextResponse.json({
             status: 401,
             message: "User ID not found",
@@ -16,18 +19,29 @@ export const GET = async (req: Request, res: NextResponse) => {
     }
 
     try {
-        const wishlistProducts = await Wishlist_Products.find({ userId });
 
-        if (!wishlistProducts.length) {
+        const userData = await Users.findOne({token})
+
+        if (!userData.wishlist) {
             return NextResponse.json({
                 status: 404,
                 message: "No wishlist products found"
             });
         }
 
+        let items:any = []
+        const product = await Products.find();
+
+        product.forEach((product) => {
+            if(userData.wishlist.includes(product._id))
+            {
+                items.push(product);
+            }
+        })
+
         return NextResponse.json({
             status: 200,
-            body: JSON.stringify(wishlistProducts),
+            body: items,
             message: "Wishlist products found"
         });
     }
@@ -44,9 +58,9 @@ export const GET = async (req: Request, res: NextResponse) => {
 export const POST = async (req: NextRequest) => {
     await dbConnect();
 
-    const userId = req.headers.get("X-User-Id");
+    const token = (await cookies()).get("token")?.value || "";
 
-    if (!userId) {
+    if (!token) {
         return NextResponse.json({
             status: 401,
             message: "Unauthorized",
@@ -65,30 +79,18 @@ export const POST = async (req: NextRequest) => {
             });
         }
 
-        let wishlist = await Wishlist_Products.findOne({ userId });
+        const userData = await Users.findOne({token})
 
-        if (!wishlist) {
-            wishlist = new Wishlist_Products({
-                userId,
-                items: [{ productId }]
+        if (!userData.wishlist) {
+            return NextResponse.json({
+                status: 401,
+                message: "Unauthorized",
+                function_name: "Wishlist_Post"
             });
-        } else {
-            const isProductInWishlist = wishlist.items.some(
-                (item: any) => item.productId.toString() === productId
-            );
-
-            if (isProductInWishlist) {
-                return NextResponse.json({
-                    status: 409,
-                    message: "Product already in wishlist",
-                    function_name: "Wishlist_Post"
-                });
-            }
-
-            wishlist.items.push({ productId });
         }
 
-        await wishlist.save();
+        userData.wishlist.push(productId);
+        await userData.save();
 
         return NextResponse.json({
             status: 200,
@@ -107,11 +109,13 @@ export const POST = async (req: NextRequest) => {
 
 export const DELETE = async (req: NextRequest) => {
     await dbConnect();
-    const userId = req.headers.get("X-User-Id");
+    const token = (await cookies()).get("token")?.value || "";
 
     const { productId } = await req.json();
+    console.log(productId);
+    
 
-    if (!userId || !productId) {
+    if (!productId) {
         return NextResponse.json({
             status: 400,
             message: "User ID and Product ID are required",
@@ -120,18 +124,18 @@ export const DELETE = async (req: NextRequest) => {
     }
 
     try {
-        const wishlist = await Wishlist_Products.findOneAndUpdate(
-            { userId },
-            { $pull: { items: { productId } } },
-            { new: true }
-        );
-        if (!wishlist) {
+        const user = await Users.findOne({token})
+        const index = user.wishlist.findIndex((wishlist:any) => wishlist == productId);
+        if (index === -1) {
             return NextResponse.json({
                 status: 404,
-                message: "Wishlist not found",
+                message: "Product not found in wishlist",
                 function_name: "Wishlist_Delete"
             });
         }
+        user.wishlist.splice(index, 1);
+        await user.save();
+        
         return NextResponse.json({
             status: 200,
             message: "Product removed from wishlist",

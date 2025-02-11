@@ -62,3 +62,48 @@ export const PUT = async (req: Request) => {
         });
     }
 };
+
+export const GET = async (req: Request, res: NextResponse) => {
+
+    await dbConnect();
+
+    try {
+        const productId  = req.url.split("client/")[1];
+
+        console.log( "Server" + productId);
+        
+        
+        if (!productId) {
+            return NextResponse.json({
+                status: 400,
+                message: "Missing required fields",
+                function_name: "Get_Product_Reviews"
+            });
+        }
+        
+        const product = await Products.findById(productId);
+        
+        if (!product) {
+            return NextResponse.json({
+                status: 404,
+                message: "Product not found",
+                function_name: "Get_Product_Reviews"
+            });
+        }
+        
+        return NextResponse.json({
+            status: 200,
+            message: "Reviews retrieved successfully",
+            data: product,
+            function_name: "Get_Product_Reviews"
+        });
+        
+    } catch (error) {
+        console.error("Error in Get_Product_Reviews", error);
+        return NextResponse.json({
+            status: 500,
+            message: "Server error",
+            function_name: "Get_Product_Reviews"
+        });
+    }
+}

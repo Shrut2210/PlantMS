@@ -7,6 +7,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { FaHome } from "react-icons/fa";
+import { IoMdCart } from "react-icons/io";
+import { FaShoppingBag } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,7 +54,7 @@ export default function RootLayout({
   }, []);
 
   const handleLogOut = async () => {
-    const response = await fetch('/api/users/logout')
+    const response = await fetch('/api/admin/logout')
 
     if(response.status === 200) {
       setUserData(null);
@@ -72,32 +76,46 @@ export default function RootLayout({
             <div className="flex">
               {userData ? 
                 (userData.role == 'customer' ? 
-                  <div className="flex">
+                  <div className="flex justify-center items-center">
                       <Link href='/components/pages/home'>
-                        <div className='text-white pe-4 hover:text-gray-500 rounded-md'>Home</div>
+                        <div className='text-white pe-4 rounded-md text-xl hover:text-green-400'><FaHome /></div>
+                      </Link>
+                      <Link href='/components/pages/customerWishlist'>
+                        <div className='text-white pe-4 rounded-md text-xl hover:text-green-400'><FaHeart /></div>
+                      </Link>
+                      <Link href='/components/pages/customerCart'>
+                        <div className='text-white pe-4 rounded-md text-xl hover:text-green-400'><IoMdCart /></div>
+                      </Link>
+                      <Link href='/components/pages/customerOrder'>
+                        <div className='text-white pe-4 rounded-md text-xl hover:text-green-400'><FaShoppingBag /></div>
                       </Link>
                       <div onClick={handleLogOut}>
-                        <div className='me-4 px-3 hover:text-gray-500 text-black bg-green-400 rounded-md'>Logout</div>
+                        <div className='me-4 px-3 py-1 hover:cursor-pointer hover:bg-green-500 text-black bg-green-400 rounded-md'>Logout</div>
                       </div>
                   </div>
                   : 
-                  <div className="flex">
+                  <div className="flex justify-center items-center">
                       <Link href='/components/pages/adminHome'>
                       <div className='text-white pe-4 hover:text-gray-500 rounded-md'>Home</div>
                     </Link>
                       <div onClick={handleLogOut}>
-                        <div className='me-4 px-3 hover:text-gray-500 text-black bg-green-400 rounded-md'>Logout</div>
+                        <div className='me-4 px-3 hover:bg-green-500 py-1 text-black bg-green-400 rounded-md'>Logout</div>
                       </div>
                   </div>
                 ) : 
                 <Link href='/components/pages/signup'>
-                  <div className='text-black px-5 py-1 bg-green-400 rounded-md'>SignUp</div>
+                  <div className='me-4 px-3 py-1 hover:cursor-pointer hover:bg-green-500 text-black bg-green-400 rounded-md'>SignUp</div>
                 </Link>
                 }
             </div>
           </div>
         </header>}
         {children}
+        <footer>
+          <div className='flex justify-center items-center h-20 p-2 bg-black text-white'>
+            &copy; {new Date().getFullYear()} PlantMS
+          </div>
+        </footer>
       </body>
     </html>
   );

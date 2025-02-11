@@ -39,7 +39,7 @@ export default function Page() {
             sub : ["Trending", "Accessories", "Typed", "Sized", "Materialed", "Colored", "Shaped", "Finished", "Locality"]
         },
         {
-            main: "Soil",
+            main: "Fertilizers",
             sub : ["Best Seller", "Packs", "Organic", "Potting", "Cocopeat", "Additives"]
         },
         {

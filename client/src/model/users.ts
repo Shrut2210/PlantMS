@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
         password: { 
             type: String, 
             required: true 
-        }, // Hashed password
+        },
         role: { 
             type: String, 
             enum: ["customer", "admin"], 
@@ -51,11 +51,11 @@ const userSchema = new mongoose.Schema(
         }],
         cart: [{ 
             type: mongoose.Schema.Types.ObjectId, 
-            ref: "Cart_Products" 
+            ref: "Products"
         }], 
         orders: [{ 
             type: mongoose.Schema.Types.ObjectId, 
-            ref: "Order_Products"  
+            ref: "Products"  
         }],
         createdAt: { 
             type: Date, 

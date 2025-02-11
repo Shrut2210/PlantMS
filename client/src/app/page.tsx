@@ -7,8 +7,6 @@ import LogIn from "/public/images/LogIn.png";
 import image1 from "/public/images/bg.jpg"
 import image2 from "/public/images/bg2.png"
 import image3 from "/public/images/item2.jpg"
-import image5 from "/public/images/bonsai.jpg"
-import image6 from "/public/images/item1.webp"
 
 
 export default function Home() {
@@ -71,13 +69,13 @@ export const products = [
     title: "SignIn",
     link: "https://cursor.so",
     thumbnail:
-      image5,
+      "",
   },
   {
     title: "LogIn",
     link: "https://gomoonbeam.com",
     thumbnail:
-      image6,
+      "",
   },
   {
     title: "SignIn",

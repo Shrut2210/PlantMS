@@ -13,23 +13,20 @@ const cartItemSchema = new mongoose.Schema(
                     type: mongoose.Schema.Types.ObjectId, 
                     ref: "Products", 
                     required: true 
-    
                 },
                 quantity: { 
                     type: Number, 
                     required: true, 
-                    min: 1 
-    
+                    default: 1 
                 },
                 addedAt: { 
                     type: Date, 
                     default: Date.now 
-    
                 },
             }
         ]
     }
 );
-  
+
 export const Cart_Products = mongoose.models.Cart_Products || mongoose.model("Cart_Products", cartItemSchema)
   
