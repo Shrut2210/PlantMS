@@ -11,6 +11,11 @@ import { FaHome } from "react-icons/fa";
 import { IoMdCart } from "react-icons/io";
 import { FaShoppingBag } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
+import github from "/public/images/25231.png";
+import linkedin from "/public/images/702300.png";
+import google from "/public/images/google-g-icon-removebg-preview.png"
+import facebook from "/public/images/facebook.png"
+import instagram from "/public/images/Instagram_logo_2016.svg.webp"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -111,11 +116,49 @@ export default function RootLayout({
           </div>
         </header>}
         {children}
-        <footer>
-          <div className='flex justify-center items-center h-20 p-2 bg-black text-white'>
-            &copy; {new Date().getFullYear()} PlantMS
+            {/* &copy; {new Date().getFullYear()} PlantMS */}
+        {!hideHeader && <footer>
+          <div className="flex md:flex-row flex-col shadow-inner shadow-zinc-900 gap-5 justify-evenly bg-black text-white p-10">
+                <div className="flex flex-col gap-2 md:w-2/5">
+                  <Image src={logo} alt='Logo' width={120} height={100} />
+                  <p className=" text-sm md:text-base dark:text-neutral-200">
+                    Discover a world of lush greenery! Shop a variety of plants, pots, and gardening essentials to bring nature into your home. Whether you're a seasoned gardener or just starting, we have everything you need to nurture your green space. 🌿✨
+                    </p>
+                    <div className="flex gap-2 mt-4">
+                        <Image src={facebook} alt='Github' width={32} height={32}/>
+                        <Image src={linkedin} alt='Linkedin' width={32} height={32} />
+                        <Image src={instagram} alt='Instagram' width={32} height={32} />
+                        <Image src={google} alt='Instagram' width={32} height={32} />
+                    </div>
+                </div>
+                <div className="flex flex-col gap-1 justify-center items-center text-sm">
+                  <div className="text-xl text-slate-500 font-bold ">Category</div>
+                  <div>Gardening</div>
+                  <div>Plants</div>
+                  <div>Seeds</div>
+                  <div>Bulbs</div>
+                  <div>Planters</div>
+                  <div>Soil & Fertilizer</div>
+                  <div>Gifts</div>
+                  <div>Pebbles</div>
+                  <div>Accessories</div>
+                </div>
+                <div className="flex flex-col gap-1 items-center text-sm">
+                  <div className="text-xl text-slate-500 font-bold ">Activity</div>
+                  <div>Blogs</div>
+                  <div>Articles</div>
+                  <div>Decoration</div>
+                  <div>Videos</div>
+                </div>
+                <div className="flex flex-col gap-1 items-center text-sm">
+                  <div className="text-xl text-slate-500 font-bold ">Subscribe</div>
+                  <div>Join us to receive gardening tips,<br /> offers, news & more</div>
+                  <a href="/components/pages/signup">
+                    <button className="w-full py-2 px-10 text-sm text-white bg-green-500 hover:bg-green-400 rounded-md">Subscribe</button>
+                  </a>
+                </div>
           </div>
-        </footer>
+        </footer>}
       </body>
     </html>
   );

@@ -98,50 +98,6 @@ export const PUT = async (req: Request, res : Response) => {
     }
 } 
 
-
-// export const GET = async (req: Request, res: Response) => {
-//     await dbConnect();
-//     const token = (await cookies()).get("token")?.value || "";
-
-//     try {
-//         const user = await Users.findOne({ token });
-//         if (!user) {
-//             return NextResponse.json({ status: 401, message: "Token not found" });
-//         }
-        
-//         const cart = await Order_Products.findOne({ userId : user._id });
-//         if (!cart) {
-//             return NextResponse.json({ status: 404, message: "Cart not found" });
-//         }
-
-//         let itemId:any = []
-
-//         const product = await Products.find();
-
-//         product.forEach((product) => {
-//             if(cart.items.some({ productId : product._id}))
-//             {
-//                 itemId.push(product);
-//             }
-//         })
-        
-//         return NextResponse.json({
-//             status: 200,
-//             message: "Cart fetched successfully",
-//             body: itemId,
-//             function_name: "Cart_GET"
-//         });
-        
-//     } catch (error) {
-//         console.error("Error in Cart_GET", error);
-//         return NextResponse.json({
-//             status: 500,
-//             message: "Server error",
-//             function_name: "Cart_GET"
-//         });
-//     }
-// }
-
 export const GET = async (req: Request, res: Response) => {
     await dbConnect();
     const token = (await cookies()).get("token")?.value || "";
