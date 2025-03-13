@@ -9,8 +9,6 @@ import image3 from "/public/images/item2.jpg"
 import { Carousel } from "./components/ui/carousel";
 import { motion } from "framer-motion";
 import { InfiniteMovingCards } from "./components/ui/infinite-moving-cards";
-
-
 export default function Home() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
