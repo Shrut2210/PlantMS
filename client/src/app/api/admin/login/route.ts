@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { compare, hash } from "bcryptjs";
+import { compare } from "bcryptjs";
 import Jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import dbConnect from "@/lib/mongodb";
 import { Users } from "@/model/users";
 
-export const POST = async (req: Request, res: Response) => {
+export const POST = async (req: Request) => {
     const { email, password } = await req.json();
 
     await dbConnect();
