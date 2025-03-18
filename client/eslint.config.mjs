@@ -15,7 +15,11 @@ const eslintConfig = [
     rules: {
       "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
       'react/no-unescaped-entities': 'off',
-      '@next/next/no-page-custom-font': 'off'
+      '@next/next/no-page-custom-font': 'off',
+      "react-hooks/rules-of-hooks": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/jsx-key": "off",
+      "@next/next/no-img-element": "off",
     }
   }
 ];

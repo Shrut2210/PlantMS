@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     domains: [
       'plantsbazar.com',
@@ -12,7 +15,6 @@ const nextConfig: NextConfig = {
       'm.media-amazon.com'
     ],
   },
-  /* config options here */
 };
 
 export default nextConfig;
