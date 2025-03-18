@@ -3,7 +3,7 @@ import { Users } from "@/model/users";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export const GET = async (req: Request, res: Response) => {
+export const GET = async (req: Request) => {
 
     await dbConnect();
 
