@@ -2,7 +2,7 @@ import Jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default function handler(req: any, res: any) {
+export default function handler(req: any) {
     const token = req.cookies.token;
 
     if (!token) {

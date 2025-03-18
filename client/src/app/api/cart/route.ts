@@ -6,7 +6,7 @@ import { log } from "console";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export const POST = async (req : Request, res : Response) => {
+export const POST = async (req : Request) => {
     await dbConnect();
 
     const token = (await cookies()).get("token")?.value || "";
@@ -54,7 +54,7 @@ export const POST = async (req : Request, res : Response) => {
     }
 }
 
-export const PUT = async (req: Request, res : Response) => {
+export const PUT = async (req: Request) => {
     await dbConnect();
     const token = (await cookies()).get("token")?.value || "";
 
@@ -114,7 +114,7 @@ export const PUT = async (req: Request, res : Response) => {
     }
 } 
 
-export const DELETE = async (req:Request, res:Response) => {
+export const DELETE = async (req:Request) => {
     await dbConnect();
     const token = (await cookies()).get("token")?.value || "";
 
@@ -156,7 +156,7 @@ export const DELETE = async (req:Request, res:Response) => {
     }
 }
 
-export const GET = async (req: Request, res: Response) => {
+export const GET = async () => {
     await dbConnect();
     const token = (await cookies()).get("token")?.value || "";
 

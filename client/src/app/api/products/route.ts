@@ -2,7 +2,7 @@ import { Products } from "@/model/products";
 import dbConnect from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 
-export const GET = async (req: Request, res: Response) => {
+export const GET = async () => {
 
     await dbConnect();
 

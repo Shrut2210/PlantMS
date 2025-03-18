@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { Users } from "@/model/users";
 
-export const GET = async (req: Request, res: NextResponse) => {
+export const GET = async () => {
     await dbConnect();
 
     const token = (await cookies()).get("token")?.value || "";
@@ -45,7 +45,7 @@ export const GET = async (req: Request, res: NextResponse) => {
       }
     }
 
-export const POST = async (req: Request, res: Response) => {
+export const POST = async (req: Request) => {
     try {
         const { _id, name, menufecharBy, price, quantity, description, main_category, sub_category, image } = await req.json();
 

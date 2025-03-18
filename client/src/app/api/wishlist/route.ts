@@ -3,9 +3,8 @@ import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import { Users } from "@/model/users";
 import { Products } from "@/model/products";
-import { products } from "@/app/page";
 
-export const GET = async (req: Request, res: NextResponse) => {
+export const GET = async () => {
     await dbConnect()
 
     const token = (await cookies()).get("token")?.value || "";

@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import dbConnect from "@/lib/mongodb";
 import { Users } from "@/model/users";
 
-export const POST = async (req: Request, res: Response) => {
+export const POST = async (req: Request) => {
     const { name, email, password, role } = await req.json();
 
     await dbConnect();

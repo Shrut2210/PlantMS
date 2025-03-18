@@ -31,7 +31,7 @@ export async function GET() {
   }
 }
 
-export const PUT = async (req : Request, res : Response) => {
+export const PUT = async (req : Request) => {
   await dbConnect();
   const token = (await cookies()).get("token")?.value || "";
 

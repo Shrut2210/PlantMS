@@ -2,7 +2,7 @@ import { Products } from "@/model/products";
 import dbConnect from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 
-export const PUT = async (req: Request, res: Response) => {
+export const PUT = async (req: Request) => {
     try {
         const productId  = req.url.split("server/")[1];
         const { _id, name, menufecharBy, price, quantity, description, main_category, sub_category, image } = await req.json();
@@ -58,7 +58,7 @@ export const PUT = async (req: Request, res: Response) => {
     }
 }
 
-export const DELETE = async (req: Request, res: Response) => {
+export const DELETE = async (req: Request) => {
     try {
         
         const productId  = req.url.split("server/")[1];

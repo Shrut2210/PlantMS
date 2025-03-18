@@ -63,7 +63,7 @@ export const PUT = async (req: Request) => {
     }
 };
 
-export const GET = async (req: Request, res: NextResponse) => {
+export const GET = async (req: Request) => {
 
     await dbConnect();
 
