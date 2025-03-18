@@ -3,12 +3,13 @@ import React, { useState, useRef, useEffect, JSX } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { StaticImageData } from "next/image";
 
 type Card = {
   id: number;
   content: JSX.Element | React.ReactNode | string;
   className: string;
-  thumbnail: string
+  thumbnail: string | StaticImageData;
 };
 
 export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
@@ -59,20 +60,6 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
   );
 };
 
-// const ImageComponent = ({ card }: { card: Card }) => {
-//   return (
-//     <motion.img
-//       layoutId={`image-${card.id}-image`}
-//       src={card.thumbnail}
-//       height="500"
-//       width="500"
-//       className={cn(
-//         "object-cover object-top absolute inset-0 h-full w-full transition duration-200"
-//       )}
-//       alt="thumbnail"
-//     />
-//   );
-// };
 
 const ImageComponent = ({ card }: { card: Card }) => {
     return (
