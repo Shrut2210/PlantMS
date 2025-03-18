@@ -7,7 +7,7 @@ import { FaCheckCircle, FaShoppingBag } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { FaStar } from 'react-icons/fa';
 
-export default function ProductPage() {
+export default function Page() {
   const [product, setProduct] = useState({})
   const params = useParams();
   const productId = params.home;

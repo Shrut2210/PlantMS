@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaCheckCircle } from 'react-icons/fa';
 
-export default function CartPage() {
+export default function Page() {
 
     const [cartData, setCartData] = useState([])
     const [showDialogOne, setShowDialogOne] = useState(false);

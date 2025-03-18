@@ -6,7 +6,7 @@ import logo from '/public/images/logo2.png';
 import { BackgroundGradientAnimation } from '../../ui/background-gradient-animation';
 import { useRouter } from 'next/navigation';
 
-export default function page() {
+export default function Page() {
 
     const [isSignUp, setIsSignUp] = useState(true);
     const router = useRouter()

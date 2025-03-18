@@ -8,7 +8,7 @@ import customer from "/public/images/customers.png"
 import review from "/public/images/review.png"
 import order from "/public/images/order.png"
 
-export default function page() {
+export default function Page() {
   return (
     <div className='w-full  h-screen'>
       <LayoutGrid cards={cards}></LayoutGrid>

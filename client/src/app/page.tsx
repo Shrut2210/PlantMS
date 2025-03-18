@@ -1,11 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import SignUp from "/public/images/SignUp.png";
-import LogIn from "/public/images/LogIn.png";
-import image1 from "/public/images/bg.jpg"
-import image2 from "/public/images/bg2.png"
-import image3 from "/public/images/item2.jpg"
 import { Carousel } from "./components/ui/carousel";
 import { motion } from "framer-motion";
 import { InfiniteMovingCards } from "./components/ui/infinite-moving-cards";

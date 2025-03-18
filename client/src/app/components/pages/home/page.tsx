@@ -10,7 +10,7 @@ import cat_planter from "/public/images/cat_planter.jpg"
 import cat_soil from "/public/images/cat_soil.jpg"
 import Link from 'next/link'
 
-export default function page() {
+export default function Page() {
     const [productData, setProductData] = useState([])
 
     const [searchQuery, setSearchQuery] = useState('')
