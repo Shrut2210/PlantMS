@@ -38,13 +38,13 @@ export default function Page() {
   const [showDialogTwo, setShowDialogTwo] = useState(false);
   const [showDialogThree, setShowDialogThree] = useState(false);
   const [userAddress, setUserAddress] = useState({
-        name: "",
-        phone: "",
-        street : "",
-        city: "",
-        state: "",
-        zip: "",
-        country: ""
+      name: "",
+      phone: "",
+      street : "",
+      city: "",
+      state: "",
+      zip: "",
+      country: ""
     })
     const paymentModes = ["UPI", "Cash On Delivery", "Credit Card", "Debit Card"];
     const handleChange = (e:any) => {
@@ -258,7 +258,7 @@ export default function Page() {
                       type="text"
                       name={field}
                       placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                      value={userAddress[field]}
+                      value={userAddress[field as keyof typeof userAddress]}
                       onChange={handleChange}
                       className="w-full px-4 py-2 text-lg rounded-md focus:outline-none bg-black border"
                       aria-label={`Enter ${field}`}
