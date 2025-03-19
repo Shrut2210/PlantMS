@@ -4,9 +4,20 @@ import { Carousel } from "./components/ui/carousel";
 import { motion } from "framer-motion";
 import { InfiniteMovingCards } from "./components/ui/infinite-moving-cards";
 export default function Home() {
+  type Product = {
+    _id: string;
+    name: string;
+    menufecharBy: string;
+    price: number;
+    quantity: string;
+    description: string;
+    main_category: string;
+    sub_category: string;
+    image: string;
+};
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [allProducts, setAllProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const fetchProducts = async () => {
@@ -62,7 +73,7 @@ export default function Home() {
   const trendingProducts = allProducts.filter((product) => product.sub_category === "Trending");
   const trendingProduct = trendingProducts.map((product) => (
     <motion.div 
-      key={product.id} 
+      key={product._id} 
       className="flex flex-col gap-3 p-4 rounded-xl items-center 
                 bg-zinc-900/80 shadow-lg shadow-black/50 hover:scale-105 
                 transition-transform duration-300 ease-in-out"
@@ -86,7 +97,7 @@ export default function Home() {
   const under500 = allProducts.filter((product) => product.price < 500);
   const under500Product = under500.map((product) => (
     <motion.div 
-      key={product.id} 
+      key={product._id} 
       className="flex flex-col justify-between gap-3 p-4 rounded-xl  items-center 
                 bg-zinc-900/80 shadow-lg shadow-black/50 hover:scale-105
                 transition-transform duration-300 ease-in-out "
@@ -169,7 +180,7 @@ export default function Home() {
         {displayedProducts.length > 0 ? (
           displayedProducts.map((product) => (
             <motion.div 
-              key={product.id} 
+              key={product._id} 
               className="flex justify-between flex-col gap-3 p-4 rounded-xl items-center 
                         bg-zinc-900/80 shadow-lg shadow-black/50 hover:scale-105 
                         transition-transform duration-300 ease-in-out"

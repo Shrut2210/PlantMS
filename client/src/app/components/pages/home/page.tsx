@@ -11,10 +11,18 @@ import cat_soil from "/public/images/cat_soil.jpg"
 import Link from 'next/link'
 
 export default function Page() {
-    const [productData, setProductData] = useState([])
+    
+    type Product = {
+        _id: number,
+        name: string,
+        price: number,
+        image: string
+    }
+
+    const [productData, setProductData] = useState<Product[]>([]);
 
     const [searchQuery, setSearchQuery] = useState('')
-    const [filteredProducts, setFilteredProducts] = useState([])
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
 
     useEffect(() => {
         fetchProductData()
@@ -116,7 +124,7 @@ export default function Page() {
         <div className='flex gap-2 w-3/4'>
             {
                 category.map((cat) => (
-                    <div className='flex gap-2 my-4' key={cat.image}>
+                    <div className='flex gap-2 my-4' key={cat.main}>
                         <Image src={cat.image} alt=''  className='w-32 h-32 opacity-60 rounded-full object-cover' />
                     </div>
                 ))

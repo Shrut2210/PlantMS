@@ -3,7 +3,14 @@ import React, { useEffect, useState } from 'react'
 
 export default function Page() {
 
-    const [orderData, setOrderData] = useState([])
+    type Order = {
+        image: string,
+        name: string,
+        price: number,
+        quantity: number
+    }
+
+    const [orderData, setOrderData] = useState<Order[]>([]);
 
     const fetchData = async () => {
         try {

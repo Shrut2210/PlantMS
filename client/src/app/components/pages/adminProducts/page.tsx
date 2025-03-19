@@ -6,7 +6,19 @@ import { FaEdit } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 
 export default function Page() {
-    const [productData, setProductData] = useState([]);
+    type Product = {
+        _id: string;
+        name: string;
+        menufecharBy: string;
+        price: string;
+        quantity: string;
+        description: string;
+        main_category: string;
+        sub_category: string;
+        image: string;
+    };
+
+    const [productData, setProductData] = useState<Product[]>([]);;
     const [openDialog, setOpenDialog] = useState(false);
     const [addProductData, setAddProductData] = useState({
         _id: '',
@@ -144,22 +156,20 @@ export default function Page() {
     };
 
     const handleDelete = async (id:any) => {
-        // Delete product
         const response = await fetch(`/api/products/server/${id}`, {
             method: 'DELETE',
         });
         
         if (response.status === 200) {
             alert("Product deleted successfully!");
-            setProductData(productData.filter(product => product._id!== id));
+            setProductData(productData.filter(product => product._id !== id));
         } else {
             console.error('Error deleting product');
             alert('Error deleting product');
         }
     }
 
-
-    const showProducts = productData ? productData.map((product) => {
+    const showProducts = productData ? productData.map((product : Product) => {
         return (
             <div className="flex gap-4 p-2 rounded-lg bg-black shadow-md shadow-zinc-700  text-white" key={product._id} >
                 <div className="flex flex-col justify-between gap-2 w-full p-3">
@@ -167,7 +177,7 @@ export default function Page() {
                         <img src={product.image} alt={product.name} className="w-full object-cover" />
                         <h3 className="text-xl font-bold">{product.name}</h3>
                         <p className="text-base text-blue-400">{product.price} Rs.</p>
-                        <p className="text-sm text-red-300">{product.quantity} {product.quantity > 1? 'units' : 'unit'} remaining</p>
+                        <p className="text-sm text-red-300">{product.quantity} {parseInt(product.quantity) > 1? 'units' : 'unit'} remaining</p>
                     </div>
                     <div className='flex gap-3 mt-4 w-full  items-center justify-center'>
                         <button className='border hover:bg-green-700 px-5 py-2 rounded-lg' onClick={() => {

@@ -3,7 +3,14 @@ import React, { useEffect, useState } from 'react'
 
 export default function Page() {
 
-    const [wishlistData, setWishlistData] = useState([])
+    type Wishlist = {
+        _id: number,
+        image: string,
+        name: string,
+        price: number
+    }
+
+    const [wishlistData, setWishlistData] = useState<Wishlist[]>([]);
 
     const fetchData = async () => {
         try {

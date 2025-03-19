@@ -1,6 +1,5 @@
 "use client"
 import { useParams } from 'next/navigation'
-import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { IoMdCart } from "react-icons/io";
 import { FaCheckCircle, FaShoppingBag } from "react-icons/fa";
@@ -8,7 +7,26 @@ import { FaHeart } from "react-icons/fa";
 import { FaStar } from 'react-icons/fa';
 
 export default function Page() {
-  const [product, setProduct] = useState({})
+
+  const [product, setProduct] = useState({
+    id: '',
+    name: '',
+    price: '',
+    description: '',
+    image: '',
+    category: '',
+    ratings: '',
+    quantity: '',
+    main_category: '',
+    sub_category: '',
+    reviews: [
+      {
+        user: '',
+        comment: '',
+        rating: ''
+      }
+    ],
+  })
   const params = useParams();
   const productId = params.home;
   console.log(params.home);
@@ -128,7 +146,7 @@ export default function Page() {
             <div className='flex flex-col gap-2'>
                 <div className='text-5xl font-bold'>{product.name}</div>
                 <div className='flex gap-2'>
-                {Array.from({ length: product.ratings }).map((_, index) => (
+                {Array.from({ length: parseInt(product.ratings) }).map((_, index) => (
                   <FaStar key={index} className="text-yellow-500 w-5 h-5" fill="currentColor" />
                 ))}
                 </div>
@@ -155,7 +173,7 @@ export default function Page() {
             <div className='text-base'>{product.description ? product.description.substring(third+5) : null}</div>
           </div>
           <div>
-            {product.reviews > 0 ? (
+            {product.reviews.length > 0 ? (
               <>
                 <div>Reviews:</div>
                 {product.reviews.map((review) => (
