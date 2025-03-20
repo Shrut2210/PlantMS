@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
         },
         addresses: [
         {
-            fullName: { 
+            name: { 
                 type: String, 
             },
             phone: { 
@@ -37,12 +37,9 @@ const userSchema = new mongoose.Schema(
             state: { 
                 type: String, 
             },
-            postalCode: { 
+            zip: { 
                 type: String, 
-            },
-            country: { 
-                type: String, 
-            },
+            }
         },
         ],
         wishlist : [{

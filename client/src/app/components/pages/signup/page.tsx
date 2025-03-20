@@ -5,6 +5,8 @@ import background1 from '/public/images/login.jpg';
 import logo from '/public/images/logo2.png';
 import { BackgroundGradientAnimation } from '../../ui/background-gradient-animation';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Page() {
 
@@ -40,7 +42,7 @@ export default function Page() {
         )
 
         if(response.status === 200) {
-            alert("Sign up successful!");
+            toast.success("Sign up successful!!!");
             setSignUpData({
                 name : "",
                 email : "",
@@ -49,7 +51,7 @@ export default function Page() {
             });
             handleToggle();
         } else {
-            alert("Error while signing up!");
+            toast.error("Sign up failed!");
         }
     }
 
@@ -66,22 +68,24 @@ export default function Page() {
         
         if(response.status === 200) {
             const data = await response.json();
-            // document.cookie = `token=${data.token}; expires=${new Date(Date.now() + 60 * 60 * 1000 * 24 * 30).toUTCString()}`;
-            alert("Login successful!");
+            toast.success("Login successful!!");
             setLoginData({
                 email : "",
                 password : ""
             });
 
-            router.push("/")
+            window.location.replace('/');
         } else {
-            alert("Invalid credentials!");
+            toast.error("Login failed!");
         }
     }
 
 
   return (
     <div className='h-screen w-screen'>
+        <ToastContainer aria-label="toast-container" 
+            position="top-center"
+            autoClose={5000} />
         <BackgroundGradientAnimation>
             <Image src={background1} alt='' className='h-screen w-screen opacity-15 absolute' ></Image>
             <div className='h-screen w-screen bg-black opacity-80 absolute'></div>

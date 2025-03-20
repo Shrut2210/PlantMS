@@ -16,6 +16,9 @@ import linkedin from "/public/images/702300.png";
 import google from "/public/images/google-g-icon-removebg-preview.png"
 import facebook from "/public/images/facebook.png"
 import instagram from "/public/images/Instagram_logo_2016.svg.webp"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Router } from "next/router";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +41,10 @@ export default function RootLayout({
   const pathname = usePathname();
   const hideHeader = pathname.includes("/components/pages/signup")
   const [userData, setUserData] = useState({
-    role: ''
+    name: '',
+    role: '',
+    email: '',
+    token: ''
   });
   const [loading, setLoading] = useState(true);
 
@@ -47,9 +53,18 @@ export default function RootLayout({
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          setUserData(data.data);
+          setUserData({
+            name: data.data.name,
+            role: data.data.role,
+            email: data.data.email,
+            token: data.data.token
+          });
+          
         } else {
-          setUserData({role: ''});
+          setUserData({name: '',
+            role: '',
+            email: '',
+            token: ''});
         }
       })
       .catch((err) => console.error("Error fetching data:", err))
@@ -60,16 +75,22 @@ export default function RootLayout({
     const response = await fetch('/api/admin/logout')
 
     if(response.status === 200) {
-      setUserData({role: ''});
-      alert("Logged out successfully!");
+      setUserData({name: '',
+        role: '',
+        email: '',
+        token: ''});
+      toast.success("Logged out successfully!!");
       window.location.replace('/');
     } else {
-      console.error("Error while logging out!");
+      toast.error("Logging out Failed!!");
     }
   }
 
   return (
     <html lang="en">
+      <ToastContainer aria-label="toast-container" 
+      position="top-center"
+      autoClose={5000} />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-serif`}
       >
@@ -77,10 +98,13 @@ export default function RootLayout({
           <div className='flex justify-between items-center h-20 p-2 bg-black'>
             <Image src={logo} alt='Logo' width={120} height={100} />
             <div className="flex">
-              {userData ? 
+              {userData.token ? 
                 (userData.role == 'customer' ? 
-                  <div className="flex justify-center items-center">
-                      <Link href='/components/pages/home'>
+                  <Link className="flex flex-col hover:cursor-pointer hover:underline"
+                  href="/components/pages/customerProfile">
+                    <div className="text-zinc-300 -mb-2">Hello,</div>
+                    <div className="text-xl">{userData.name}</div>
+                      {/* <Link href='/components/pages/home'>
                         <div className='text-white pe-4 rounded-md text-xl hover:text-green-400'><FaHome /></div>
                       </Link>
                       <Link href='/components/pages/customerWishlist'>
@@ -94,15 +118,15 @@ export default function RootLayout({
                       </Link>
                       <div onClick={handleLogOut}>
                         <div className='me-4 px-3 py-1 hover:cursor-pointer hover:bg-green-500 text-black bg-green-400 rounded-md'>Logout</div>
-                      </div>
-                  </div>
+                      </div> */}
+                  </Link>
                   : 
                   <div className="flex justify-center items-center">
                       <Link href='/components/pages/adminHome'>
                       <div className='text-white pe-4 hover:text-gray-500 rounded-md'>Home</div>
                     </Link>
                       <div onClick={handleLogOut}>
-                        <div className='me-4 px-3 hover:bg-green-500 py-1 text-black bg-green-400 rounded-md'>Logout</div>
+                        <div className='me-4 px-3 hover:bg-green-500 cursor-pointer py-1 text-black bg-green-400 rounded-md'>Logout</div>
                       </div>
                   </div>
                 ) : 

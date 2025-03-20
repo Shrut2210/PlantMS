@@ -5,6 +5,8 @@ import { IoMdCart } from "react-icons/io";
 import { FaCheckCircle, FaShoppingBag } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { FaStar } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Page() {
 
@@ -77,13 +79,13 @@ export default function Page() {
       })
 
       if(res.status === 200) {
-        alert("Product added to wishlist!");
+        toast.success("Product added to wishlist!")
       } else {
-        alert("Error adding to wishlist!");
+        toast.error("Product adding to wishlist failed!");
       }
     }
     catch (error) {
-      console.error("Network error:", error);
+      toast.error("Product adding to wishlist failed!");
     }
   }
 
@@ -95,13 +97,13 @@ export default function Page() {
         body: JSON.stringify({ productId }),
       })
       if(res.status === 200) {
-        alert("Product added to cart!");
+        toast.success("Product added to cart!");
       } else {
-        alert("Error adding to cart!");
+        toast.error("Product adding to cart failed!");
       }
     }
     catch (error) {
-      console.error("Network error:", error);
+      toast.error("Product adding to cart failed!");
     }
   }
 
@@ -124,11 +126,11 @@ export default function Page() {
         setShowDialogOne(false)
         setShowDialogThree(true)
       } else {
-        alert("Error adding to cart!");
+        toast.error("Product order failed!");
       }
     }
     catch (error) {
-      console.error("Network error:", error);
+      toast.error("Product order failed!");
     }
   }
 
@@ -138,6 +140,9 @@ export default function Page() {
 
   return (
     <div className='flex justify-center items-center py-10'>
+      <ToastContainer aria-label="toast-container" 
+      position="top-center"
+      autoClose={5000} />
         <div className='flex flex-col w-3/4  p-5 gap-5 backdrop-blur-sm backdrop-brightness-50'>
           <div className='flex gap-5'>
             <div className=''>

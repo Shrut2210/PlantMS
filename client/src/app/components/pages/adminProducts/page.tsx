@@ -239,12 +239,6 @@ export default function Page() {
                     </div>
                 </div>
                 <div className='flex gap-3'>
-                    <select name="" id="" className='text-zinc-500 bg-black px-5 py-2 rounded-md border'>
-                        <option value="">Category</option>
-                        {category.map(cat => (
-                                            <option className='bg-zinc-800' key={cat.main} value={cat.main}>{cat.main}</option>
-                                        ))}
-                    </select>
                     <button className="bg-green-700 py-2 px-10 font-bold rounded-md" onClick={() => setOpenDialog(true)}> Add Product</button>
                 </div>
             </div>

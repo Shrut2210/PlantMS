@@ -46,10 +46,6 @@ export default function Home() {
     {
       title: "Plant day",
       src: "https://urbanplants.co.in/cdn/shop/collections/plants-673803.png?v=1689753524",
-    },
-    {
-      title: "Plant care",
-      src: "https://abanahomes.com/wp-content/uploads/2023/02/cheap-indoor-plants.jpeg",
     }
   ];
 
@@ -256,10 +252,10 @@ export default function Home() {
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <h1 className="font-semibold tracking-wide mt-10">Gallary</h1>
+      <h1 className="font-semibold tracking-wide mt-10">Gallery</h1>
     </motion.div>
 
-    <div className="max-w-[80%] justify-center items-center mx-auto flex flex-col gap-5">
+    <div className="max-w-[90%] justify-center items-center mx-auto flex flex-col gap-5">
       <div className="flex gap-4 w-full items-center">
         <iframe
           width="100%"

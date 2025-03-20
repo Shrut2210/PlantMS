@@ -131,7 +131,7 @@ export default function Page() {
                         {product}
                     </div>
                     <div className='flex flex-col gap-1'>
-                        Total Product : { cartData ? cartData.length : 0}
+                        Total Product : { cartData ? cartData.reduce((acc, curr) => acc + curr.quantity, 0) : 0}
                         <div>Total Price : $ { cartData ? cartData.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0) : 0}</div>
                         <button className='bg-green-700 hover:bg-green-800 my-5 py-2 px-5 text-lg rounded-xl text-black font-bold' onClick={() => setShowDialogOne(true)}>Procced to Buy</button>
                     </div>

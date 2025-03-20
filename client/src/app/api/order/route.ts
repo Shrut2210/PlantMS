@@ -18,6 +18,7 @@ export const PUT = async (req: Request) => {
         }
 
         const { productId, quantity } = await req.json();
+        const prod_quan = quantity
 
         if( productId != 0 && quantity != 0 )
         {
@@ -43,10 +44,19 @@ export const PUT = async (req: Request) => {
                 await newOrder.save();
             }
 
+            const productData = await Products.findOne({ _id: productId });
+
+            if (productData) {
+                await Products.updateOne(
+                    { _id: productId },
+                    { $set: { quantity: productData.quantity - prod_quan } }
+                );
+            }
+
             return NextResponse.json({
                 status: 200,
                 message: "Product added to cart",
-                function_name: "Cart_PUT"
+                function_name: "Order_PUT"
             });
         }
 
@@ -76,6 +86,15 @@ export const PUT = async (req: Request) => {
                     quantity: item.quantity
                 });
             });
+        }
+
+        const productData = await Products.findOne({ _id: productId });
+
+        if (productData) {
+            await Products.updateOne(
+                { _id: productId },
+                { $set: { quantity: productData.quantity - prod_quan } }
+            );
         }
 
         await orderProduct.save();
