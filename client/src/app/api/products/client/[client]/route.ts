@@ -5,10 +5,10 @@ import mongoose from "mongoose";
 
 export const PUT = async (req: Request) => {
     try {
-        const productId  = req.url.split("client/")[1];
-        const { userId, rating, comment } = await req.json();
-
-        if (!productId || !userId || !rating || !comment) {
+        const { productId, user, rating, comment } = await req.json();
+        console.log(productId, user, rating, comment);
+        
+        if (!productId || !user || !rating || !comment) {
             return NextResponse.json({
                 status: 400,
                 message: "Missing required fields",
@@ -36,7 +36,7 @@ export const PUT = async (req: Request) => {
         }
 
         const newReview = {
-            user: new mongoose.Types.ObjectId(userId),
+            user: new mongoose.Types.ObjectId(user),
             rating,
             comment,
             createdAt: new Date(),

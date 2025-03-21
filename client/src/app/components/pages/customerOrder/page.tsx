@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
 
 export default function Page() {
 
@@ -32,6 +33,7 @@ export default function Page() {
     }
 
     const [userData, setUserData] = useState({
+        _id: '',
         name: '',
         email: '',
         token: '',
@@ -41,9 +43,14 @@ export default function Page() {
 
     const [orderData, setOrderData] = useState<Order[]>([]);
     const [showDialogOne, setShowDialogOne] = useState(false);
+    const [showDialogTwo, setShowDialogTwo] = useState(false);
     const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
     const [selectedProductName, setSelectedProductName] = useState('');
     const [selectedProductId, setSelectedProductId] = useState('');
+    const [review, setReview] = useState({
+        rating: 1,
+        comment: ''
+    })
     
     useEffect(() => {
         fetchData();
@@ -56,6 +63,7 @@ export default function Page() {
             const jsonData = await response.json();
             setUserData({
                 ...userData,
+                _id: jsonData.data._id,
                 name: jsonData.data.name,
                 email: jsonData.data.email,
                 token: jsonData.token,
@@ -91,8 +99,34 @@ export default function Page() {
         }
     };
 
+    const handleSubmitReview = async () => {
+        setShowDialogTwo(false);
+
+        const response = await fetch(`/api/products/client/${userData._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                productId: selectedProductId,
+                rating: review.rating,
+                comment: review.comment,
+                user: userData._id
+            }),
+        })
+
+        if (response.status === 200) {
+            toast.success('Review submitted successfully!');
+        } else {
+            toast.error('Failed to submit review. Please try again.');
+        }
+    }
+
     return (
         <div className='flex justify-center items-center py-10'>
+            <ToastContainer aria-label="toast-container" 
+                            position="top-center"
+                            autoClose={5000} />
             <div className='flex flex-col gap-4 w-3/4 justify-center items-center'>
                 <div className='text-4xl text-center'>Previous Orders</div>
                 <div className='grid grid-cols-4 gap-5'>
@@ -103,9 +137,17 @@ export default function Page() {
                                 <div>{item.name}</div>
                                 <div>Price: ${item.price} </div>
                                 <div>Quantity: {item.quantity} units</div>
+                            </div>
+                            <div className='w-full gap-1 flex justify-center items-center'>
+                                <button 
+                                    onClick={() => {setShowDialogTwo(true); setSelectedProductId(item._id)}} 
+                                    className='bg-zinc-300 w-full text-black hover:bg-zinc-400 py-1 rounded-lg'
+                                >
+                                    Add Review
+                                </button>
                                 <button 
                                     onClick={() => handleShowInvoice(item._id)} 
-                                    className='bg-zinc-300 text-black hover:bg-zinc-400 py-1 rounded-lg'
+                                    className='bg-zinc-300 w-full text-black hover:bg-zinc-400 py-1 rounded-lg'
                                 >
                                     Invoice
                                 </button>
@@ -116,8 +158,8 @@ export default function Page() {
             </div>
 
             {showDialogOne && selectedInvoice && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className=" p-6 rounded-lg shadow-lg w-1/3">
+                <div className="fixed inset-0 flex items-center w-screen h-screen justify-center backdrop-blur-lg bg-opacity-90">
+                    <div className=" p-6 bg-black  rounded-lg shadow-lg ">
                         <h2 className="text-xl font-bold text-center">Invoice</h2>
                         <p><strong>Product:</strong> {selectedProductName}</p>
                         <p><strong>Quantity:</strong> {selectedInvoice.items.find(item => item.productId === selectedProductId)?.quantity || 0}</p>
@@ -130,7 +172,23 @@ export default function Page() {
                     </div>
                 </div>
             )}
-
+            {showDialogTwo && (
+                <div className="fixed inset-0 flex items-center w-screen h-screen justify-center backdrop-blur-lg bg-opacity-90">
+                    <div className=" p-6 bg-black flex flex-col w-1/3  rounded-lg shadow-lg ">
+                        <h2 className="text-xl font-bold text-center py-5">Add Review</h2>
+                        <form className='flex flex-col gap-2'>
+                            <label className='text-sm' htmlFor="rating">Rating:</label>
+                            <input type="number" className='bg-black' min="1" max="5" id="rating" name="rating" value={review.rating} onChange={(e) => setReview({...review, rating: parseInt(e.target.value) })} />
+                            <textarea placeholder="Comment" className='bg-black' onChange={(e) => setReview({...review, comment: e.target.value })}/>
+                        </form>
+                        <div className='flex justify-between'>
+                            <button type="submit" onClick={handleSubmitReview} className="bg-blue-500 text-white py-2 px-4 mt-4 rounded-lg">Submit</button>
+                            <button onClick={() => setShowDialogTwo(false)} className="bg-red-500 text-white py-2 px-4 mt-4 rounded-lg">Close</button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
         </div>
     );
 }
