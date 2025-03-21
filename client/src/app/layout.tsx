@@ -100,13 +100,16 @@ export default function RootLayout({
             <div className="flex">
               {userData.token ? 
                 (userData.role == 'customer' ? 
-                  <Link className="flex flex-col hover:cursor-pointer hover:underline"
-                  href="/components/pages/customerProfile">
-                    <div className="text-zinc-300 -mb-2">Hello,</div>
-                    <div className="text-xl">{userData.name}</div>
-                      {/* <Link href='/components/pages/home'>
-                        <div className='text-white pe-4 rounded-md text-xl hover:text-green-400'><FaHome /></div>
+                  <div className="flex justify-center items-center ">
+                    <Link href='/components/pages/home'>
+                        <div className='text-white pe-4 rounded-md text-2xl hover:text-green-400'><FaHome /></div>
                       </Link>
+                    <Link className="flex flex-col hover:cursor-pointer hover:underline"
+                    href="/components/pages/customerProfile">
+                      <div className="text-zinc-300 -mb-2">Hello,</div>
+                      <div className="text-xl">{userData.name}</div>
+                    </Link>
+                      {/* 
                       <Link href='/components/pages/customerWishlist'>
                         <div className='text-white pe-4 rounded-md text-xl hover:text-green-400'><FaHeart /></div>
                       </Link>
@@ -119,7 +122,7 @@ export default function RootLayout({
                       <div onClick={handleLogOut}>
                         <div className='me-4 px-3 py-1 hover:cursor-pointer hover:bg-green-500 text-black bg-green-400 rounded-md'>Logout</div>
                       </div> */}
-                  </Link>
+                  </div>
                   : 
                   <div className="flex justify-center items-center">
                       <Link href='/components/pages/adminHome'>

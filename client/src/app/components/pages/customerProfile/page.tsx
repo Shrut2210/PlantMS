@@ -52,6 +52,16 @@ export default function age() {
                   token: data.data.token,
                   addresses: data.data.addresses
                 });
+                setAddress(
+                  {
+                    name: '',
+                    phone: '',
+                    street: '',
+                    city:'',
+                    state: '',
+                    zip: ''
+                  }
+                )
                 
               } else {
                 setUserData({name: '',
@@ -79,7 +89,6 @@ export default function age() {
           }
 
         const handleSave = async () => {
-            console.log("handleSave function called!");
             console.log(address);
             console.log(newAddress);
             
@@ -118,6 +127,8 @@ export default function age() {
         }
 
         const handleDelete = async (addressToDelete : any) => {
+          console.log("this is delete " , addressToDelete);
+          
             const response = await fetch('/api/admin', {
               method: 'DELETE',
               headers: {
@@ -177,14 +188,14 @@ export default function age() {
 
                     <div className="w-1/2 p-4">
                         <div>Add Address</div>
-                        <input type="text"  placeholder="Name"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
-                        <input type="text" placeholder="Phone" onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
-                        <input type="text"  placeholder="Street" onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
-                        <input type="text"  placeholder="City"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
-                        <input type="text"  placeholder="State"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
-                        <input type="text"  placeholder="ZIP Code"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-4" />
+                        <input type="text" name='name'  placeholder="Name"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
+                        <input type="text" name='phone' placeholder="Phone" onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
+                        <input type="text" name='street'  placeholder="Street" onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
+                        <input type="text" name='city'   placeholder="City"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
+                        <input type="text" name='state'  placeholder="State"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-2" />
+                        <input type="text" name='zip'  placeholder="ZIP Code"  onChange={handleInputChange} className="w-full p-2 border bg-transparent text-white placeholder-gray-400 mb-4" />
                         <div className='flex gap-2'>
-                            <button onClick={handleSave} className="bg-green-500 text-white px-4 py-2 rounded w-full">Save</button>
+                            <button onClick={() => handleSave()} className="bg-green-500 text-white px-4 py-2 rounded w-full">Save</button>
                             <button onClick={() => setShowDialogOne(false)} className="bg-gray-500 text-white px-4 py-2 rounded w-full">Cancel</button>
                         </div>
                     </div>

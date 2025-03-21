@@ -50,10 +50,17 @@ const userSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId, 
             ref: "Products"
         }], 
-        orders: [{ 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: "Products"  
-        }],
+        orders: [
+            {
+                productId : { 
+                    type: mongoose.Schema.Types.ObjectId, 
+                    ref: "Products"  
+                },
+                quantity : {
+                    type: Number,
+                }
+            }
+        ],
         createdAt: { 
             type: Date, 
             default: Date.now 
@@ -61,7 +68,52 @@ const userSchema = new mongoose.Schema(
         token : {
             type: String,
             default : ""
-        }
+        },
+        invoice : [
+            {
+                items : [
+                    {
+                        productId : {
+                            type: mongoose.Schema.Types.ObjectId, 
+                            ref: "Products"
+                        },
+                        quantity : {
+                            type: Number
+                        },
+                        price : {
+                            type: Number
+                        }
+                    }
+                ],
+                payemntMode : {
+                    type: String
+                },
+                address : {
+                    name: {
+                        type: String
+                    },
+                    phone: {
+                        type: String
+                    },
+                    street: {
+                        type: String
+                    },
+                    city: {
+                        type: String
+                    },
+                    state: {
+                        type: String
+                    },
+                    zip: {
+                        type: String
+                    }
+                },
+                createdAt : {
+                    type: Date,
+                    default: Date.now
+                }
+            }
+        ]
     }
 );
   

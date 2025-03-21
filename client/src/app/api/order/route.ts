@@ -6,7 +6,6 @@ import { Users } from "@/model/users";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-
 export const PUT = async (req: Request) => {
     await dbConnect();
     const token = (await cookies()).get("token")?.value || "";
@@ -17,8 +16,7 @@ export const PUT = async (req: Request) => {
             return NextResponse.json({ status: 401, message: "Token not found" });
         }
 
-        const { productId, quantity } = await req.json();
-        const prod_quan = quantity
+        const { productId, quantity, paymentMode, userAddress } = await req.json();
 
         if( productId != 0 && quantity != 0 )
         {
@@ -49,13 +47,40 @@ export const PUT = async (req: Request) => {
             if (productData) {
                 await Products.updateOne(
                     { _id: productId },
-                    { $set: { quantity: productData.quantity - prod_quan } }
+                    { $set: { quantity: productData.quantity - quantity } }
                 );
             }
+            
+            await Users.updateOne({
+                _id: user._id
+                },
+                {
+                    $push : { orders : {productId, quantity}}
+                }
+            )
 
+            await Users.updateOne(
+                { _id: user._id },
+                {
+                    $push: {
+                        invoice: {
+                            items: [
+                                {
+                                    productId,
+                                    quantity,
+                                    price: productData.price
+                                }
+                            ],
+                            paymentMode: paymentMode,
+                            address: userAddress
+                        }
+                    }
+                }
+            );
+            
             return NextResponse.json({
                 status: 200,
-                message: "Product added to cart",
+                message: "Order Placed successfully",
                 function_name: "Order_PUT"
             });
         }
@@ -88,14 +113,50 @@ export const PUT = async (req: Request) => {
             });
         }
 
-        const productData = await Products.findOne({ _id: productId });
-
-        if (productData) {
-            await Products.updateOne(
-                { _id: productId },
-                { $set: { quantity: productData.quantity - prod_quan } }
-            );
+        if(cartData && cartData.items.length > 0)
+        {   
+            for(const item of cartData.items)
+            {
+                await Products.updateOne(
+                    {_id : item.productId},
+                    { $inc : { quantity : -item.quantity}}
+                )
+            }
         }
+
+        await Users.updateOne({
+            _id: user._id
+            },
+            {
+                $push : { orders : cartData.items.map((item:any) => ({
+                    productId: item.productId,
+                    quantity: item.quantity
+                 }))
+                }
+            }
+        )
+
+        await Users.updateOne(
+            { _id: user._id },
+            {
+                $push: {
+                    invoice: {
+                        $each: cartData.items.map((item: any) => ({
+                            items: [
+                                {
+                                    productId: item.productId,
+                                    quantity: item.quantity,
+                                    price: item.price
+                                }
+                            ],
+                            paymentMode: paymentMode,
+                            address: userAddress
+                        }))
+                    }
+                }
+            }
+        );
+
 
         await orderProduct.save();
 
@@ -135,11 +196,11 @@ export const GET = async () => {
         const productIds = order.items.map((item:any) => item.productId);
         const products = await Products.find({ _id: { $in: productIds } });
 
-        const orderedProducts = products.map(product => {
-            const orderItem = order.items.find((item:any) => item.productId.toString() === product._id.toString());
+        const orderedProducts = order.items.map((item:any) => {
+            const orderItem = products.find((p:any) => item.productId.toString() === p._id.toString());
             return {
-                ...product.toObject(),
-                quantity: orderItem?.quantity || 0
+                ...orderItem?.toObject(),
+                quantity: item?.quantity || 0
             };
         });
 

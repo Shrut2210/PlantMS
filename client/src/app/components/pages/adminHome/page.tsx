@@ -10,7 +10,7 @@ import order from "/public/images/order.png"
 
 export default function Page() {
   return (
-    <div className='w-full  h-screen'>
+    <div className='w-full h-screen'>
       <LayoutGrid cards={cards}></LayoutGrid>
     </div>
   )

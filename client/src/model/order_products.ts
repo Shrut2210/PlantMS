@@ -19,13 +19,13 @@ const orderSchema = new mongoose.Schema(
             quantity: { 
                 type: Number, 
                 required: true 
-            }
+            },
+            orderedAt: { 
+                type: Date, 
+                default: Date.now 
+            },
         },
         ],
-        orderedAt: { 
-            type: Date, 
-            default: Date.now 
-        },
     }
 );
   

@@ -34,7 +34,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
             onClick={() => handleClick(card)}
             className={cn(
               card.className,
-              "relative overflow-hidden",
+              "relative overflow-hidden border",
               selected?.id === card.id
                 ? "rounded-lg cursor-pointer absolute inset-0 h-1/2 w-full md:w-1/2 m-auto z-50 flex justify-center items-center flex-wrap flex-col"
                 : lastSelected?.id === card.id
